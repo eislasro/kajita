@@ -14,7 +14,7 @@ function loadCheckout(){
 
         prodsHtml += `<tr>
                     <td><a href="product.html?reference=${product.reference}">${prodFilter.name}</a></td>
-                    <td>${currency} ${formatNumber(subtotal.toFixed(2))}</td>
+                    <td>${currency} ${formatNumber(subtotal)}</td>
                     </tr>`
     totalG = 0 + total;
     })
@@ -39,11 +39,11 @@ function loadCheckout(){
     var html = `${prodsHtml}
             <tr class="summary-subtotal">
                 <td>Subtotal:</td>
-                <td>${currency} ${formatNumber((total * 0.81).toFixed(2))}</td>
+                <td>${currency} ${formatNumber((total * 0.81))}</td>
             </tr><!-- End .summary-subtotal -->
             <tr>
                 <td>IVA:</td>
-                <td>${currency} ${formatNumber((total * 0.19).toFixed(2))}</td>
+                <td>${currency} ${formatNumber((total * 0.19))}</td>
             </tr>
             <tr>
                 <td>Shipping:</td>
@@ -51,7 +51,7 @@ function loadCheckout(){
             </tr>
             <tr class="summary-total">
                 <td>Total:</td>
-                <td>${currency} ${formatNumber((total).toFixed(2))}</td>
+                <td>${currency} ${formatNumber((total))}</td>
             </tr><!-- End .summary-total -->`
 
     $('#products-list').html(html);
@@ -90,8 +90,8 @@ function payCard(token){
         "amount": {
           "currency": currency,
           "subtotalIva": 0,
-          "subtotalIva0": (totalG * 0.81).toFixed(2),
-          "iva": (totalG * 0.19).toFixed(2),
+          "subtotalIva0": (totalG * 0.81),
+          "iva": (totalG * 0.19),
           "ice": 0
         },
         "fullResponse": "v2",
@@ -132,9 +132,10 @@ function payCard(token){
         url: "https://api-uat.kushkipagos.com/card/v1/charges",
         type: "POST",
         headers: {
-          "Private-Merchant-Id": privateKey
+          "Private-Merchant-Id": privateKey,
+          "Content-Type": 'application/json'
         },
-        data: payload,
+        data: JSON.stringify(payload),
         success: function(response) {
             $('#message').html('Tu pago ha sido exitoso')
             swal.hideLoading()
@@ -157,18 +158,21 @@ function payTransfer(token){
         "token": token,
         "amount": {
           "subtotalIva": 0,
-          "subtotalIva0": (totalG * 0.81).toFixed(2),
-          "iva": (totalG * 0.19).toFixed(2)
+          "subtotalIva0": (totalG * 0.81),
+          "iva": (totalG * 0.19)
         }
       }
+
+      
 
       $.ajax({
         url: "https://api-uat.kushkipagos.com/transfer/v1/init",
         type: "POST",
         headers: {
-          "Private-Merchant-Id": privateKey
+          "Private-Merchant-Id": privateKey,
+          "Content-Type": 'application/json'
         },
-        data: payload,
+        data: JSON.stringify(payload),
         success: function(response) {
             $('#message').html('Tu pago está en proceso')
             swal.hideLoading()
@@ -191,18 +195,19 @@ function payCash(token){
         "token": token,
         "amount": {
           "subtotalIva": 0,
-          "subtotalIva0": (totalG * 0.81).toFixed(2),
-          "iva": (totalG * 0.19).toFixed(2)
+          "subtotalIva0": (totalG * 0.81),
+          "iva": (totalG * 0.19)
         }
       }
-
+      console.log(payload);
       $.ajax({
         url: "https://api-uat.kushkipagos.com/cash/v1/charges/init",
         type: "POST",
         headers: {
-          "Private-Merchant-Id": privateKey
+          "Private-Merchant-Id": privateKey,
+          "Content-Type": 'application/json'
         },
-        data: payload,
+        data: JSON.stringify(payload),
         success: function(response) {
             $('#message').html('Tu pago está en proceso')
             swal.hideLoading()
