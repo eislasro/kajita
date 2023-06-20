@@ -132,7 +132,7 @@ function payCard(token){
         url: "https://api-uat.kushkipagos.com/card/v1/charges",
         type: "POST",
         headers: {
-          "Private-Merchant-I": privateKey
+          "Private-Merchant-Id": privateKey
         },
         data: payload,
         success: function(response) {
@@ -166,7 +166,7 @@ function payTransfer(token){
         url: "https://api-uat.kushkipagos.com/transfer/v1/init",
         type: "POST",
         headers: {
-          "Private-Merchant-I": privateKey
+          "Private-Merchant-Id": privateKey
         },
         data: payload,
         success: function(response) {
@@ -200,7 +200,7 @@ function payCash(token){
         url: "https://api-uat.kushkipagos.com/cash/v1/charges/init",
         type: "POST",
         headers: {
-          "Private-Merchant-I": privateKey
+          "Private-Merchant-Id": privateKey
         },
         data: payload,
         success: function(response) {
