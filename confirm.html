@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Kushki Store</title>
-    <script src="https://cdn.kushkipagos.com/kushki-checkout.js">       </script>
     <meta name="keywords" content="store">
     <meta name="description" content="Kushki Store">
     <meta name="author" content="Jontan Murcia">
@@ -24,7 +23,6 @@
     <link rel="stylesheet" href="assets/css/plugins/owl-carousel/owl.carousel.css">
     <link rel="stylesheet" href="assets/css/plugins/magnific-popup/magnific-popup.css">
     <link rel="stylesheet" href="assets/css/plugins/jquery.countdown.css">
-    <link rel="stylesheet" href="/path/to/styles/default.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark-reasonable.min.css">
     <!-- Main CSS File -->
@@ -36,8 +34,6 @@
 </head>
 
 <body>
-<input type="hidden" name="cart_id" value="123">
-</form>
     <div class="page-wrapper">
         <header class="header header-intro-clearance header-4">
             
@@ -54,42 +50,24 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                        <li class="breadcrumb-item">Checkout</li>
+                        <li class="breadcrumb-item active" aria-current="page">Confirmar</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
 
             <div class="page-content">
             	<div class="checkout">
-	                <div class="container">
-            			<a href="#code-modal" id="toggle-modal" data-toggle="modal"></a>
-		                	<div class="row">
-		                		<div class="col-lg-9">
-                                        <div class="col-md-12">
-                                            <div class="accordion accordion-icon" id="accordion-3">
-                                                <form id="my-form" action="/kajita/confirm.html" method="get">
-                                                </from>
+                    <div class="container">
+                        <div class="col-md-12">
 
-
-                                            </div><!-- End .accordion -->
-                                        </div><!-- End .col-md-6 -->
-                                    </div><!-- End .col-lg-9 -->
-		                		<aside class="col-lg-3">
-		                			<div class="summary">
-		                				<h3 class="summary-title">Tu Pedido</h3><!-- End .summary-title -->
-
-		                				<table class="table table-summary">
-		                					<thead>
-		                						<tr>
-		                							<th>Producto</th>
-		                							<th>Total</th>
-		                						</tr>
-		                					</thead>
-
-		                					<tbody id="products-list">
-		                						
-		                					</tbody>
-		                				</table><!-- End .table table-summary -->
+                        </div>
+                        <a href="#code-modal" id="toggle-modal" data-toggle="modal"></a>
+                        <div class="row">
+		                		
+		                		<aside class="col-lg-12">
+		                			<div class="summary text-center">
+		                				<h3 class="summary-title" id="message"></h3><!-- End .summary-title -->
 		                				
 		                			</div><!-- End .summary -->
 		                		</aside><!-- End .col-lg-3 -->
@@ -115,11 +93,15 @@
                         <span aria-hidden="true"><i class="icon-close"></i></span>
                     </button>
                     <pre><code class="language-javascript" id="jscode"></code></pre>
+                    <button data-dismiss="modal" onclick="finish()" class="btn btn-outline-primary-2 btn-order btn-block">
+                        <span class="btn-text">Finalizar</span>
+                        <span class="btn-hover-text">Finalizar</span>
+                    </button>
                 </div><!-- End .modal-body -->
             </div><!-- End .modal-content -->
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
-
+    
     
      <!-- Plugins JS File -->
      <script src="assets/js/jquery.min.js"></script>
@@ -135,6 +117,7 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
      <script src="https://cdn.kushkipagos.com/kushki.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.kushkipagos.com/kushki-checkout.js"></script>
      <!-- Assets -->
     <script src="assets/json/categories.js"></script>
     <script src="assets/json/brands.js"></script>
@@ -149,8 +132,10 @@
      <script src="js/LoadCheckout.js"></script>
      <!-- Main JS File -->
     <script src="js/main.js"></script>
-     <script src="js/checkoutMain.js"></script>
+    <script src="js/confirmMain.js"></script>
      <script src="assets/js/demos/demo-4.js"></script>
+     
+    
 </body>
 
 
