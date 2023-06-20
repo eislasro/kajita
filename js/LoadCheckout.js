@@ -82,7 +82,7 @@ function loadConfirm(){
     
 }
 
-function payTransfer(token){
+function payCard(token){
     const currency = localStorage.getItem('currency') ?? 'CLP';
     const privateKey = privateCredentials();
     var payload = {
