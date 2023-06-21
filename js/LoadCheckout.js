@@ -162,8 +162,7 @@ function payTransfer(token){
           "iva": (totalG * 0.19)
         }
       }
-
-      
+      console.log(payload);
 
       $.ajax({
         url: "https://api-uat.kushkipagos.com/transfer/v1/init",
@@ -174,10 +173,13 @@ function payTransfer(token){
         },
         data: JSON.stringify(payload),
         success: function(response) {
-            $('#message').html('Tu pago está en proceso')
-            swal.hideLoading()
-            swal.close();
+          $('#message').html('Tu pago está en proceso')
+          swal.hideLoading()
+          swal.close();
           console.log(response);
+          if(response !=null && response.redirectUrl !=null){
+            window.location.assign(response.redirectUrl)
+          }
           localStorage.removeItem('cart')
         },
         error: function(xhr, status, error) {
@@ -188,6 +190,12 @@ function payTransfer(token){
         }
       });
 }
+// Opcional: Agregar un controlador de evento click usando jQuery
+$("#downloadButton").on("click", function(event) {
+  event.preventDefault(); // Prevenir el comportamiento predeterminado del enlace
+  var url = $(this).attr("href");
+  window.open(url, "_blank");
+});
 
 function payCash(token){
     const privateKey = privateCredentials();
@@ -209,9 +217,13 @@ function payCash(token){
         },
         data: JSON.stringify(payload),
         success: function(response) {
-            $('#message').html('Tu pago está en proceso')
-            swal.hideLoading()
-            swal.close();
+          $('#message').html('Tu pago está en proceso')
+          swal.hideLoading()
+          swal.close();
+          if(response != null && response.pdfUrl !=null){
+            $('#downloadButton').attr('href', response.pdfUrl);
+            $('#downloadButton').show()
+          }
           console.log(response);
           localStorage.removeItem('cart')
         },
