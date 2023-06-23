@@ -139,6 +139,7 @@ function payCard(token){
         data: JSON.stringify(payload),
         success: function(response) {
             $('#message').html('Tu pago ha sido exitoso')
+            $('#checkoutBtn').hide()
             swal.hideLoading()
             swal.close();
           console.log(response);
@@ -155,6 +156,7 @@ function payCard(token){
 
 function payTransfer(token){
     const publicKey = credentials();
+    const currency = localStorage.getItem('currency') ?? 'CLP';
     var payload = {
         "token": token,
         "amount": {
@@ -180,6 +182,15 @@ function payTransfer(token){
           console.log(response);
           if(response !=null && response.redirectUrl !=null){
             window.location.assign(response.redirectUrl)
+          } else if(currency == 'MXN' && response){
+            var html = `<span><strong>Banco:</strong> ${response.bank} </span>
+            <span><strong>Número de Referencia:</strong> ${response.referenceNumber} </span>
+            <span><strong>Ticket:</strong> ${response.ticketNumber} </span>
+            <span><strong>Procesador:</strong> ${response.referenceProcessor} </span>
+            <span><strong>Transacción:</strong> ${response.transactionReference} </span>`
+
+            $('#detail').html(html)
+            $('#checkoutBtn').hide()
           }
           localStorage.removeItem('cart')
         },
@@ -187,6 +198,7 @@ function payTransfer(token){
             $('#message').html('Tu pago no pudo ser procesado')
             swal.hideLoading()
             swal.close();
+            
           console.log(error);
         }
       });
@@ -225,6 +237,7 @@ function payCash(token){
             $('#downloadButton').attr('href', response.pdfUrl);
             $('#downloadButton').show()
           }
+          $('#checkoutBtn').hide()
           console.log(response);
           localStorage.removeItem('cart')
         },
