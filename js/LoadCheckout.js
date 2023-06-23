@@ -1,6 +1,8 @@
 var totalG = 0;
 var cartProductsG = [];
 
+const apiBase = 'https://kushkinodeproxy-jonatanjosmurcia.b4a.run'
+
 function loadCheckout(){
 
     var cartProducts = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []
@@ -18,23 +20,22 @@ function loadCheckout(){
                     </tr>`
     totalG = 0 + total;
     })
-    var merchantKey = credentials();
-    var idForm = getIdForm();
-    var kushki = new KushkiCheckout({
-        kformId: idForm,
-        form: "my-form",
-        publicMerchantId: merchantKey,
-        inTestEnvironment: true,
-        amount: {
-         subtotalIva: totalG * 0.81,
-         iva: totalG * 0.19,
-         subtotalIva0:0,
-         }
-        });
-        (response) => {
-                          swal.close();
-                          if(response.token){
-          var jsonHtml = `          `}}
+    if(totalG>0){
+      var merchantKey = credentials();
+      var idForm = getIdForm();
+
+      var kushki = new KushkiCheckout({
+          kformId: idForm,
+          form: "my-form",
+          publicMerchantId: merchantKey,
+          inTestEnvironment: true,
+          amount: {
+           subtotalIva: totalG * 0.81,
+           iva: totalG * 0.19,
+           subtotalIva0:0,
+           }
+          });
+    }
 
     var html = `${prodsHtml}
             <tr class="summary-subtotal">
@@ -84,7 +85,7 @@ function loadConfirm(){
 
 function payCard(token){
     const currency = localStorage.getItem('currency') ?? 'CLP';
-    const privateKey = privateCredentials();
+    const publicKey = credentials();
     var payload = {
         "token": token,
         "amount": {
@@ -129,10 +130,10 @@ function payCard(token){
       }
 
       $.ajax({
-        url: "https://api-uat.kushkipagos.com/card/v1/charges",
+        url: apiBase + "/api/v1/kushki/card",
         type: "POST",
         headers: {
-          "Private-Merchant-Id": privateKey,
+          "Public-Merchant-Id": publicKey,
           "Content-Type": 'application/json'
         },
         data: JSON.stringify(payload),
@@ -153,7 +154,7 @@ function payCard(token){
 }
 
 function payTransfer(token){
-    const privateKey = privateCredentials();
+    const publicKey = credentials();
     var payload = {
         "token": token,
         "amount": {
@@ -165,10 +166,10 @@ function payTransfer(token){
       console.log(payload);
 
       $.ajax({
-        url: "https://api-uat.kushkipagos.com/transfer/v1/init",
+        url: apiBase + "/api/v1/kushki/transfer",
         type: "POST",
         headers: {
-          "Private-Merchant-Id": privateKey,
+          "Public-Merchant-Id": publicKey,
           "Content-Type": 'application/json'
         },
         data: JSON.stringify(payload),
@@ -198,7 +199,7 @@ $("#downloadButton").on("click", function(event) {
 });
 
 function payCash(token){
-    const privateKey = privateCredentials();
+  const publicKey = credentials();
     var payload = {
         "token": token,
         "amount": {
@@ -209,10 +210,10 @@ function payCash(token){
       }
       console.log(payload);
       $.ajax({
-        url: "https://api-uat.kushkipagos.com/cash/v1/charges/init",
+        url: apiBase + "/api/v1/kushki/cash",
         type: "POST",
         headers: {
-          "Private-Merchant-Id": privateKey,
+          "Public-Merchant-Id": publicKey,
           "Content-Type": 'application/json'
         },
         data: JSON.stringify(payload),
