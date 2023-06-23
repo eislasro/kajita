@@ -1,7 +1,7 @@
 var totalG = 0;
 var cartProductsG = [];
 
-const apiBase = 'https://kushkinodeproxy-jonatanjosmurcia.b4a.run'
+const apiBase = 'https://backkajita-efrenislas.b4a.run'
 
 function loadCheckout(){
 
