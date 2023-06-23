@@ -68,3 +68,9 @@
 .padding{
     padding: 10px;
 }
+
+.detail-container{
+    display: flex;
+    flex-direction: column;
+    
+}
